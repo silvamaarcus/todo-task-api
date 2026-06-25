@@ -8,7 +8,7 @@ export class GetTaskByIdController {
 
   async execute(httpRequest) {
     try {
-      const taskId = httpRequest.body.id;
+      const taskId = httpRequest.params.id; // Obtém o ID da tarefa a partir dos parâmetros da requisição na URL
 
       const task = await this.getTaskByIdUseCase.execute(taskId);
 
