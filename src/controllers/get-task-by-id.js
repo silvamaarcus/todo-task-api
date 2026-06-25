@@ -1,4 +1,4 @@
-import { TaskNotFoundError } from '../errors.js';
+import { TaskNotFoundError } from '../errors/index.js';
 import { created, notFound, serverError } from './helpers/http.js';
 
 export class GetTaskByIdController {
