@@ -7,5 +7,9 @@
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
-  }
+  },
+  "jest.nodeEnv": {
+    "NODE_OPTIONS": "--experimental-vm-modules"
+  },
+  "jest.jestCommandLine": "node --experimental-vm-modules node_modules/.bin/jest"
 }
