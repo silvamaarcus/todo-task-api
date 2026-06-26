@@ -3,8 +3,7 @@ import { updateTaskSchema } from '../schemas/task.js';
 import { badRequest, created, notFound, serverError } from './helpers/http.js';
 
 export class UpdateTaskController {
-  constructor(getTaskByIdUseCase, updateTaskUseCase) {
-    this.getTaskByIdUseCase = getTaskByIdUseCase;
+  constructor(updateTaskUseCase) {
     this.updateTaskUseCase = updateTaskUseCase;
   }
 
