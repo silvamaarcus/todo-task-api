@@ -13,12 +13,10 @@ export class UpdateTaskUseCase {
       throw new TaskNotFoundError(taskId);
     }
 
-    const task = {
-      id: taskId,
-      ...updateTaskParams,
-    };
-
-    const updateTask = await this.updateTaskRepository.execute(task);
+    const updateTask = await this.updateTaskRepository.execute(
+      taskId,
+      updateTaskParams,
+    );
 
     return updateTask;
   }
