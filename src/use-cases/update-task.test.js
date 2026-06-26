@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker';
+import { jest } from '@jest/globals';
 
+import { TaskNotFoundError } from '../errors';
 import { UpdateTaskUseCase } from './update-task';
 
 describe('UpdateTaskUseCase', () => {
@@ -53,5 +55,17 @@ describe('UpdateTaskUseCase', () => {
     expect(taskFound.title).toBe('Novo Teste');
     expect(taskFound.description).toBe('Comentário editato!');
     expect(taskFound.status).toBe('IN_PROGRESS');
+  });
+
+  test('Deve lançar TaskNotFoundError quando a Task não for encontrada', async () => {
+    const { sut, getTaskByIdRepositoryStub } = makeSut();
+
+    jest
+      .spyOn(getTaskByIdRepositoryStub, 'execute')
+      .mockResolvedValueOnce(null);
+
+    const taskId = faker.string.uuid();
+
+    await expect(sut.execute(taskId)).rejects.toThrow(TaskNotFoundError);
   });
 });
