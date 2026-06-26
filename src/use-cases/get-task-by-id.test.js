@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker';
+import { jest } from '@jest/globals';
 
+import { TaskNotFoundError } from '../errors/index.js';
 import { GetTaskByIdUseCase } from './get-task-by-id';
 
 describe('GetTaskByIdUseCase', () => {
@@ -33,5 +35,19 @@ describe('GetTaskByIdUseCase', () => {
     expect(foundTask).toBeTruthy();
     expect(foundTask.id).toBeDefined();
     expect(foundTask.title).toBe('Tarefa teste');
+  });
+
+  test('Lança TaskNotFoundError quando a tarefa não existe', async () => {
+    const { sut, getTaskByIdRepositoryStub } = makeSut();
+
+    // Sobrescrevemos o comportamento do stub p/ retornar null, simulando "não encontrado no banco"
+    jest
+      .spyOn(getTaskByIdRepositoryStub, 'execute')
+      .mockResolvedValueOnce(null);
+
+    const taskId = faker.string.uuid();
+
+    // Verificamos que o use case lança o erro correto
+    await expect(sut.execute(taskId)).rejects.toThrow(TaskNotFoundError);
   });
 });
