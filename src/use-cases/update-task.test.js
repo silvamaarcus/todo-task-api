@@ -49,7 +49,7 @@ describe('UpdateTaskUseCase', () => {
   test('Deve atualizar a Task encontrada', async () => {
     const { sut } = makeSut();
 
-    const taskFound = await sut.execute(task, newTask);
+    const taskFound = await sut.execute(task.id, newTask);
 
     expect(taskFound.id).toBeDefined();
     expect(taskFound.title).toBe('Novo Teste');
