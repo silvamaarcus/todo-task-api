@@ -7,10 +7,7 @@ export class UpdateTaskUseCase {
   }
 
   async execute(taskId, updateTaskParams) {
-    const taskAlreadyExists = await this.getTaskByIdRepository.execute(
-      taskId,
-      updateTaskParams,
-    );
+    const taskAlreadyExists = await this.getTaskByIdRepository.execute(taskId);
 
     if (!taskAlreadyExists) {
       throw new TaskNotFoundError(taskId);
