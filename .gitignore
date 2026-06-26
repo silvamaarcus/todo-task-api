@@ -9,3 +9,6 @@ node_modules
 
 # Ignore agents
 agents
+
+# Coverage directory used by tools like istanbul
+coverage
