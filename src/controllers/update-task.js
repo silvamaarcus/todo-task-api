@@ -14,7 +14,7 @@ export class UpdateTaskController {
       const parsedParams = updateTaskSchema.safeParse(params);
 
       if (!parsedParams.success) {
-        return badRequest({ message: parsedParams.error.errors[0].message });
+        return badRequest({ message: parsedParams.error.issues[0].message });
       }
 
       const taskId = httpRequest.params.id;
@@ -29,7 +29,6 @@ export class UpdateTaskController {
       if (error instanceof TaskNotFoundError) {
         return notFound({ message: error.message });
       }
-
       return serverError();
     }
   }
