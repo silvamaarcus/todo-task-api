@@ -2,8 +2,7 @@ import { TaskNotFoundError } from '../errors/index.js';
 import { created, notFound, serverError } from './helpers/http.js';
 
 export class DeleteTaskController {
-  constructor(getTaskByIdUseCase, deleteTaskUseCase) {
-    this.getTaskByIdUseCase = getTaskByIdUseCase;
+  constructor(deleteTaskUseCase) {
     this.deleteTaskUseCase = deleteTaskUseCase;
   }
 
@@ -18,7 +17,6 @@ export class DeleteTaskController {
       if (error instanceof TaskNotFoundError) {
         return notFound({ message: error.message });
       }
-
       return serverError();
     }
   }

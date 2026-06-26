@@ -72,10 +72,10 @@ export const makeDeleteTaskController = () => {
   const getTaskByIdRepository = new GetTaskByIdRepository(); // ID da 'Task'
   const deleteTaskRepository = new DeleteTaskRepository(); // Dados da 'Task'
   // 2. Aplica a regra de negócio p/ deletar uma 'Task'
-  const updateTaskUseCase = new DeleteTaskUseCase(
+  const deleteTaskUseCase = new DeleteTaskUseCase(
     getTaskByIdRepository,
     deleteTaskRepository,
   );
   // 3. Recebe a requisição p/ deletar uma 'Task' e retorna a resposta
-  return new DeleteTaskController(updateTaskUseCase);
+  return new DeleteTaskController(deleteTaskUseCase);
 };
