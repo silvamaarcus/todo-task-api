@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { jest } from '@jest/globals';
 
 import { TaskNotFoundError } from '../errors/index.js';
-import { GetTaskByIdUseCase } from './get-task-by-id';
+import { GetTaskByIdUseCase } from './get-task-by-id.js';
 
 describe('GetTaskByIdUseCase', () => {
   const task = {

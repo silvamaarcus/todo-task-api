@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 import { TASK_TYPE } from '../constants/index.js';
-import { CreateTaskUseCase } from './create-task';
+import { CreateTaskUseCase } from './create-task.js';
 
 describe('CreateTaskUseCase', () => {
   // Stub para gerar ID

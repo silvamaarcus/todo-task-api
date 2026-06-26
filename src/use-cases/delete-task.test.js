@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { jest } from '@jest/globals';
 
-import { TaskNotFoundError } from '../errors';
-import { DeleteTaskUseCase } from './delete-task';
+import { TaskNotFoundError } from '../errors.js';
+import { DeleteTaskUseCase } from './delete-task.js';
 
 describe('DeleteTaskUseCase', () => {
   const task = {

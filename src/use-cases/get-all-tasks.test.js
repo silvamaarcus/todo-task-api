@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { GetAllTasksUseCase } from './get-all-tasks';
+import { GetAllTasksUseCase } from './get-all-tasks.js';
 
 describe('GetAllTasksUseCase', () => {
   const tasks = [
