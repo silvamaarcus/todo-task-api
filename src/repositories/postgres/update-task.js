@@ -1,6 +1,6 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
-import { prisma } from '../../../prisma/prisma';
+import { prisma } from '../../../prisma/prisma.js';
 import { TaskNotFoundError } from '../../errors/index.js';
 
 export class UpdateTaskRepository {

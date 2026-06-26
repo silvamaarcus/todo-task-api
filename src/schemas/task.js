@@ -1,6 +1,6 @@
 import z from 'zod';
 
-import { TASK_TYPE } from '../constants';
+import { TASK_TYPE } from '../constants/index.js';
 
 export const createTaskSchema = z.object({
   title: z
