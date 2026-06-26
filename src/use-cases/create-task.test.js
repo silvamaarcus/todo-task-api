@@ -40,7 +40,7 @@ describe('CreateTaskUseCase', () => {
     };
   };
 
-  test('Testa se uma nova Task é criada com sucesso', async () => {
+  test('Garante que a Task é criada com sucesso', async () => {
     const { sut } = makeSut();
 
     const createTask = await sut.execute(task);
