@@ -10,12 +10,14 @@ export const createTaskSchema = z.object({
   description: z.string().trim().optional(),
 });
 
-export const updateTaskSchema = createTaskSchema.extend({
-  status: z
-    .enum([TASK_TYPE.TODO, TASK_TYPE.IN_PROGRESS, TASK_TYPE.DONE], {
-      errorMap: () => ({
-        message: `O tipo só pode ser ${TASK_TYPE.TODO}, ${TASK_TYPE.IN_PROGRESS} ou ${TASK_TYPE.DONE}`,
-      }),
-    })
-    .optional(),
-});
+export const updateTaskSchema = createTaskSchema
+  .extend({
+    status: z
+      .enum([TASK_TYPE.TODO, TASK_TYPE.IN_PROGRESS, TASK_TYPE.DONE], {
+        errorMap: () => ({
+          message: `O tipo só pode ser ${TASK_TYPE.TODO}, ${TASK_TYPE.IN_PROGRESS} ou ${TASK_TYPE.DONE}`,
+        }),
+      })
+      .optional(),
+  })
+  .partial();
