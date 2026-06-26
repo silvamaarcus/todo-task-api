@@ -1,3 +1,4 @@
+import { IdGeneratorAdapter } from '../adapters/id-generator.js';
 import {
   CreateTaskController,
   DeleteTaskController,
@@ -27,7 +28,11 @@ export const makeCreateTaskController = () => {
   // 1. Salva a 'Task' no banco de dados
   const createTaskRepository = new CreateTaskRepository();
   // 2. Aplica a regra de negócio p/ criar uma 'Task'
-  const createTaskUseCase = new CreateTaskUseCase(createTaskRepository);
+  const idGeneratorAdapter = new IdGeneratorAdapter(); // Gerar Id com UUID
+  const createTaskUseCase = new CreateTaskUseCase(
+    idGeneratorAdapter,
+    createTaskRepository,
+  );
   // 3. Recebe a requisição p/ criar uma 'Task' e retorna a resposta
   return new CreateTaskController(createTaskUseCase);
 };

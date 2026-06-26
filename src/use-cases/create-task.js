@@ -1,12 +1,11 @@
-import { v4 as uuidv4 } from 'uuid';
-
 export class CreateTaskUseCase {
-  constructor(createTaskRepository) {
+  constructor(idGeneratorAdapter, createTaskRepository) {
+    this.idGeneratorAdapter = idGeneratorAdapter;
     this.createTaskRepository = createTaskRepository;
   }
 
   async execute(createTaskParams) {
-    const taskId = uuidv4();
+    const taskId = await this.idGeneratorAdapter.execute();
 
     const task = {
       ...createTaskParams,
