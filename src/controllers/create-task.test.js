@@ -56,4 +56,17 @@ describe('CreateTaskController', () => {
 
     expect(result.statusCode).toBe(400);
   });
+
+  test('Deve verificar se CreateTaskUseCase é chamado com os parâmetros corretos', async () => {
+    const { sut, createTaskUseCaseStub } = makeSut();
+    const executeSpy = import.meta.jest.spyOn(createTaskUseCaseStub, 'execute');
+
+    await sut.execute(httpRequest);
+
+    expect(executeSpy).toHaveBeenCalledTimes(1); // Verifica se o método foi chamado apenas uma vez
+    expect(executeSpy).toHaveBeenCalledWith({
+      title: httpRequest.body.title,
+      description: httpRequest.body.description,
+    }); // Zod valida apenas title e description
+  });
 });
