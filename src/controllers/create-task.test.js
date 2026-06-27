@@ -30,4 +30,30 @@ describe('CreateTaskController', () => {
     expect(result.statusCode).toBe(201);
     expect(result.body).toEqual(httpRequest.body);
   });
+
+  test('Deve retornar 400 quando uma Task não receber um Título obrigatório', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.execute({
+      body: {
+        ...task,
+        title: undefined,
+      },
+    });
+
+    expect(result.statusCode).toBe(400);
+  });
+
+  test('Deve retornar 400 quando uma Task receber um Título vazio', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.execute({
+      body: {
+        ...task,
+        title: '',
+      },
+    });
+
+    expect(result.statusCode).toBe(400);
+  });
 });
