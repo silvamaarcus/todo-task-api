@@ -78,4 +78,23 @@ describe('UpdateTaskController', () => {
 
     expect(result.statusCode).toBe(404);
   });
+
+  test('Deve retornar 500 quando ocorrer erro interno no servidor', async () => {
+    const { sut, updateTaskUseCaseStub } = makeSut();
+    import.meta.jest
+      .spyOn(updateTaskUseCaseStub, 'execute')
+      .mockRejectedValueOnce(new Error());
+
+    const result = await sut.execute({
+      params: {
+        id: task.id,
+      },
+      body: {
+        title: 'Jantar',
+        description: 'Comer apenas carne e salada',
+      },
+    });
+
+    expect(result.statusCode).toBe(500);
+  });
 });
