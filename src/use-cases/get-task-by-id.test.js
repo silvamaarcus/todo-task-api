@@ -2,16 +2,10 @@ import { faker } from '@faker-js/faker';
 import { jest } from '@jest/globals';
 
 import { TaskNotFoundError } from '../errors/index.js';
+import { task } from '../tests/fixtures/tasks.js';
 import { GetTaskByIdUseCase } from './get-task-by-id.js';
 
 describe('GetTaskByIdUseCase', () => {
-  const task = {
-    id: faker.string.uuid(),
-    title: 'Tarefa teste',
-    description: 'Descrição da tarefa teste',
-    status: 'IN_PROGRESS',
-  };
-
   // Stub que simula o banco retornando uma tarefa
   class GetTaskByIdRepositoryStub {
     async execute() {
@@ -34,7 +28,7 @@ describe('GetTaskByIdUseCase', () => {
 
     expect(foundTask).toBeTruthy();
     expect(foundTask.id).toBeDefined();
-    expect(foundTask.title).toBe('Tarefa teste');
+    expect(foundTask.title).toBe('Teste');
   });
 
   test('Lança TaskNotFoundError quando a tarefa não existe', async () => {

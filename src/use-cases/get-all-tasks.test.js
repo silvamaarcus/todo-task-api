@@ -1,23 +1,7 @@
-import { faker } from '@faker-js/faker';
-
+import { tasks } from '../tests/fixtures/tasks.js';
 import { GetAllTasksUseCase } from './get-all-tasks.js';
 
 describe('GetAllTasksUseCase', () => {
-  const tasks = [
-    {
-      id: faker.string.uuid(),
-      title: 'Tarefa teste 1',
-      description: 'Descrição da tarefa teste 1',
-      status: 'IN_PROGRESS',
-    },
-    {
-      id: faker.string.uuid(),
-      title: 'Tarefa teste 2',
-      description: 'Descrição da tarefa teste 2',
-      status: 'COMPLETED',
-    },
-  ];
-
   class GetAllTasksRepositoryStub {
     async execute() {
       return tasks;

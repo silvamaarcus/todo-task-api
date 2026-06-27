@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 import { TASK_TYPE } from '../constants/index.js';
+import { task } from '../tests/fixtures/tasks.js';
 import { CreateTaskUseCase } from './create-task.js';
 
 describe('CreateTaskUseCase', () => {
@@ -17,12 +18,6 @@ describe('CreateTaskUseCase', () => {
       return task;
     }
   }
-
-  const task = {
-    title: 'Nova atividade',
-    description: 'Teste de descrição',
-    type: TASK_TYPE.TODO,
-  };
 
   const makeSut = () => {
     const idGeneratorAdapterStub = new IdGeneratorAdapterStub();

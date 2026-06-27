@@ -2,23 +2,10 @@ import { faker } from '@faker-js/faker';
 import { jest } from '@jest/globals';
 
 import { TaskNotFoundError } from '../errors.js';
+import { newTask, task } from '../tests/fixtures/tasks.js';
 import { UpdateTaskUseCase } from './update-task.js';
 
 describe('UpdateTaskUseCase', () => {
-  const task = {
-    id: faker.string.uuid(),
-    title: 'Teste',
-    description: 'Comentário...',
-    status: 'TODO',
-  };
-
-  const newTask = {
-    id: faker.string.uuid(),
-    title: 'Novo Teste',
-    description: 'Comentário editato!',
-    status: 'IN_PROGRESS',
-  };
-
   class GetTaskByIdRepositoryStub {
     async execute() {
       return task;
