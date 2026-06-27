@@ -43,4 +43,19 @@ describe('UpdateTaskController', () => {
     expect(result.body.title).toBe('Jantar');
     expect(result.body.description).toBe('Comer apenas carne e salada');
   });
+
+  test('Deve retornar 400 quando uma Task não for atualizada por falta de parametros', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.execute({
+      params: {
+        id: task.id,
+      },
+      body: {
+        title: '',
+      },
+    });
+
+    expect(result.statusCode).toBe(400);
+  });
 });
