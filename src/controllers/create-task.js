@@ -15,7 +15,7 @@ export class CreateTaskController {
       const parsedParams = createTaskSchema.safeParse(params);
 
       if (!parsedParams.success) {
-        return badRequest({ message: parsedParams.error.errors[0].message });
+        return badRequest({ message: parsedParams.error.issues[0].message });
       }
 
       // Aplica regra de negócio nos dados validados (parsedParams)
