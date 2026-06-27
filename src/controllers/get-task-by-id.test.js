@@ -1,3 +1,4 @@
+import { TaskNotFoundError } from '../errors';
 import { task } from '../tests/fixtures/tasks';
 import { GetTaskByIdController } from './get-task-by-id';
 
@@ -31,5 +32,22 @@ describe('GetTaskByIdController', () => {
 
     expect(result.statusCode).toBe(201);
     expect(result.body).toEqual(task);
+  });
+
+  test('Deve retornar 404 quando a Task não for encontrada', async () => {
+    const { sut, getTaskByIdUseCaseStub } = makeSut();
+    const taskId = ''; // Forçar ID da Task errado
+
+    import.meta.jest
+      .spyOn(getTaskByIdUseCaseStub, 'execute')
+      .mockRejectedValueOnce(new TaskNotFoundError()); // Forçar erro no metódo execute
+
+    const result = await sut.execute({
+      params: {
+        id: taskId,
+      },
+    });
+
+    expect(result.statusCode).toBe(404);
   });
 });
