@@ -10,4 +10,6 @@ export default {
     '!src/**/*.test.js',
     '!**/node_modules/**',
   ],
+  setupFilesAfterEnv: ['./src/tests/setup.js'],
+  maxWorkers: 1, // Executa testes sequencialmente para evitar conflitos no banco
 };
