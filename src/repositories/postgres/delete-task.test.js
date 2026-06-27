@@ -32,7 +32,7 @@ describe('DeleteTaskRepository', () => {
   test('Deve lançar o erro do Prisma', async () => {
     const sut = new DeleteTaskRepository();
     import.meta.jest
-      .spyOn(prisma.task, 'update')
+      .spyOn(prisma.task, 'delete')
       .mockRejectedValueOnce(new Error());
 
     const taskId = task.id;
