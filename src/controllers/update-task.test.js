@@ -1,3 +1,4 @@
+import { TaskNotFoundError } from '../errors';
 import { task } from '../tests/fixtures/tasks';
 import { UpdateTaskController } from './update-task';
 
@@ -57,5 +58,24 @@ describe('UpdateTaskController', () => {
     });
 
     expect(result.statusCode).toBe(400);
+  });
+
+  test('Deve retornar 404 quando a Task não for encontrada', async () => {
+    const { sut, updateTaskUseCaseStub } = makeSut();
+
+    import.meta.jest
+      .spyOn(updateTaskUseCaseStub, 'execute')
+      .mockRejectedValueOnce(new TaskNotFoundError()); // Forçar erro no metódo execute
+
+    const result = await sut.execute({
+      params: {
+        id: '',
+      },
+      body: {
+        title: 'Jantar',
+      },
+    });
+
+    expect(result.statusCode).toBe(404);
   });
 });
