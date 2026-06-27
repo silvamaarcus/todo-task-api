@@ -69,4 +69,15 @@ describe('CreateTaskController', () => {
       description: httpRequest.body.description,
     }); // Zod valida apenas title e description
   });
+
+  test('Deve retornar 500 quando ocorrer erro interno no servidor', async () => {
+    const { sut, createTaskUseCaseStub } = makeSut();
+    import.meta.jest
+      .spyOn(createTaskUseCaseStub, 'execute')
+      .mockRejectedValueOnce(new Error());
+
+    const result = await sut.execute(httpRequest);
+
+    expect(result.statusCode).toBe(500);
+  });
 });
