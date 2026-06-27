@@ -1,4 +1,4 @@
-import { TASK_TYPE } from '../constants';
+import { TASK_TYPE } from '../constants/index.js';
 
 export class CreateTaskUseCase {
   constructor(idGeneratorAdapter, createTaskRepository) {
