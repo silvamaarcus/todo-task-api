@@ -45,6 +45,31 @@ describe('UpdateTaskController', () => {
     expect(result.body.description).toBe('Comer apenas carne e salada');
   });
 
+  test('Deve retornar 400 quando uma Task receber status não permitido (TODO, IN_PROGRESS, DONE)', async () => {
+    const { sut, updateTaskUseCaseStub } = makeSut();
+    const updatedTask = {
+      ...task,
+      title: 'Jantar',
+      description: 'Comer apenas carne e salada',
+      status: 'INVALID_STATUS', // Força status que não existe
+    };
+    import.meta.jest
+      .spyOn(updateTaskUseCaseStub, 'execute')
+      .mockResolvedValueOnce(updatedTask);
+
+    const result = await sut.execute({
+      params: {
+        id: task.id,
+      },
+      body: updatedTask,
+    });
+
+    expect(result.statusCode).toBe(400);
+    expect(result.body.message).toBe(
+      'Status inválido! Escolha: TODO, IN_PROGRESS ou DONE',
+    );
+  });
+
   test('Deve retornar 400 quando uma Task não for atualizada por falta de parametros', async () => {
     const { sut } = makeSut();
 
