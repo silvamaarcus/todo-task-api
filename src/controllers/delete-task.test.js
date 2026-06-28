@@ -48,4 +48,19 @@ describe('DeleteTaskController', () => {
 
     expect(result.statusCode).toBe(404);
   });
+
+  test('Deve retornar 500 quando ocorrer erro interno no servidor', async () => {
+    const { sut, deleteTaskUseCaseStub } = makeSut();
+    import.meta.jest
+      .spyOn(deleteTaskUseCaseStub, 'execute')
+      .mockRejectedValueOnce(new Error());
+
+    const result = await sut.execute({
+      params: {
+        id: task.id,
+      },
+    });
+
+    expect(result.statusCode).toBe(500);
+  });
 });
