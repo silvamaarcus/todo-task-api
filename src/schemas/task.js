@@ -14,9 +14,7 @@ export const updateTaskSchema = createTaskSchema
   .extend({
     status: z
       .enum([TASK_TYPE.TODO, TASK_TYPE.IN_PROGRESS, TASK_TYPE.DONE], {
-        errorMap: () => ({
-          message: `O tipo só pode ser ${TASK_TYPE.TODO}, ${TASK_TYPE.IN_PROGRESS} ou ${TASK_TYPE.DONE}`,
-        }),
+        message: `Status inválido! Escolha: ${TASK_TYPE.TODO}, ${TASK_TYPE.IN_PROGRESS} ou ${TASK_TYPE.DONE}`,
       })
       .optional(),
   })
