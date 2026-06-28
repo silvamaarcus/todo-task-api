@@ -1,3 +1,4 @@
+import { TaskNotFoundError } from '../errors';
 import { task } from '../tests/fixtures/tasks';
 import { DeleteTaskController } from './delete-task';
 
@@ -30,5 +31,21 @@ describe('DeleteTaskController', () => {
     const result = await sut.execute(httpRequest);
 
     expect(result.statusCode).toBe(201);
+  });
+
+  test('Deve retornar 404 quando a Task não for encontrada', async () => {
+    const { sut, deleteTaskUseCaseStub } = makeSut();
+
+    import.meta.jest
+      .spyOn(deleteTaskUseCaseStub, 'execute')
+      .mockRejectedValueOnce(new TaskNotFoundError()); // Forçar erro no metódo execute
+
+    const result = await sut.execute({
+      params: {
+        id: '',
+      },
+    });
+
+    expect(result.statusCode).toBe(404);
   });
 });
