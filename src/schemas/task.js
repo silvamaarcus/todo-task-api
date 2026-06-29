@@ -8,6 +8,11 @@ export const createTaskSchema = z.object({
     .trim()
     .min(3, { message: 'Título deve conter no mínimo 3 caracteres.' }),
   description: z.string().trim().optional(),
+  status: z
+    .enum([TASK_TYPE.TODO, TASK_TYPE.IN_PROGRESS, TASK_TYPE.DONE], {
+      message: `Status inválido! Escolha: ${TASK_TYPE.TODO}, ${TASK_TYPE.IN_PROGRESS} ou ${TASK_TYPE.DONE}`,
+    })
+    .default(TASK_TYPE.TODO),
 });
 
 export const updateTaskSchema = createTaskSchema
