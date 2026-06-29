@@ -25,12 +25,12 @@ describe('DeleteTaskController', () => {
     },
   };
 
-  test('Deve retornar 201 quando uma Task for deletada com sucesso', async () => {
+  test('Deve retornar 200 quando uma Task for deletada com sucesso', async () => {
     const { sut } = makeSut();
 
     const result = await sut.execute(httpRequest);
 
-    expect(result.statusCode).toBe(201);
+    expect(result.statusCode).toBe(200);
   });
 
   test('Deve retornar 404 quando a Task não for encontrada', async () => {

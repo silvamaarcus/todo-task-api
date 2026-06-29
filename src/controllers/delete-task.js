@@ -1,5 +1,5 @@
 import { TaskNotFoundError } from '../errors/index.js';
-import { created, notFound, serverError } from './helpers/http.js';
+import { notFound, ok, serverError } from './helpers/http.js';
 
 export class DeleteTaskController {
   constructor(deleteTaskUseCase) {
@@ -12,7 +12,7 @@ export class DeleteTaskController {
 
       const deleteTask = await this.deleteTaskUseCase.execute(taskId);
 
-      return created(deleteTask);
+      return ok(deleteTask);
     } catch (error) {
       if (error instanceof TaskNotFoundError) {
         return notFound({ message: error.message });
