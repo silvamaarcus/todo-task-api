@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "test": "dotenv -e .env.test -- node --experimental-vm-modules node_modules/.bin/jest --runInBand",
-    "test:watch": "dotenv -e .env.test -- node --experimental-vm-modules node_modules/.bin/jest --runInBand --watch",
     "test:cov": "dotenv -e .env.test -- node --experimental-vm-modules node_modules/.bin/jest --runInBand --coverage",
     "start": "node index.js",
     "dev": "node index.js",
