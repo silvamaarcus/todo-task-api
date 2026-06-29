@@ -31,6 +31,6 @@ export const tasks = [
     id: faker.string.uuid(),
     title: 'Tarefa teste 3',
     description: 'Descrição da tarefa teste 3',
-    status: 'COMPLETED',
+    status: 'DONE',
   },
 ];
