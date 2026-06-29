@@ -67,7 +67,8 @@ describe('CreateTaskController', () => {
     expect(executeSpy).toHaveBeenCalledWith({
       title: httpRequest.body.title,
       description: httpRequest.body.description,
-    }); // Zod valida apenas title e description
+      status: httpRequest.body.status,
+    }); // Zod valida title, description e status
   });
 
   test('Deve retornar 500 quando ocorrer erro interno no servidor', async () => {
