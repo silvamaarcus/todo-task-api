@@ -3,8 +3,8 @@ export class GetAllTasksUseCase {
     this.getAllTasksRepository = getAllTasksRepository;
   }
 
-  async execute() {
-    const tasks = await this.getAllTasksRepository.execute();
+  async execute(filter) {
+    const tasks = await this.getAllTasksRepository.execute(filter);
 
     return tasks;
   }
