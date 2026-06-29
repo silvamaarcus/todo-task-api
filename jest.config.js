@@ -18,4 +18,10 @@ export default {
         'postgresql://postgres:password@localhost:5433/todo-task-test',
     },
   },
+  // Ignora mudanças em arquivos que não sejam de teste
+  watchPathIgnorePatterns: [
+    '/node_modules/',
+    '/coverage/',
+    '.*\\.(?!test\\.js$)[^.]+\\.js$', // Ignora arquivos .js que não sejam .test.js
+  ],
 };
