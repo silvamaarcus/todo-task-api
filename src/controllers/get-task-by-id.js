@@ -1,5 +1,5 @@
 import { TaskNotFoundError } from '../errors/index.js';
-import { created, notFound, serverError } from './helpers/http.js';
+import { notFound, ok, serverError } from './helpers/http.js';
 
 export class GetTaskByIdController {
   constructor(getTaskByIdUseCase) {
@@ -12,7 +12,7 @@ export class GetTaskByIdController {
 
       const task = await this.getTaskByIdUseCase.execute(taskId);
 
-      return created(task);
+      return ok(task);
     } catch (error) {
       if (error instanceof TaskNotFoundError) {
         return notFound({ message: error.message });
