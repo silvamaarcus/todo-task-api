@@ -19,7 +19,7 @@ describe('UpdateTaskController', () => {
     };
   };
 
-  test('Deve retornar 201 quando uma Task for atualizada com sucesso', async () => {
+  test('Deve retornar 200 quando uma Task for atualizada com sucesso', async () => {
     const { sut, updateTaskUseCaseStub } = makeSut();
     const updatedTask = {
       ...task,
@@ -40,7 +40,7 @@ describe('UpdateTaskController', () => {
       },
     });
 
-    expect(result.statusCode).toBe(201);
+    expect(result.statusCode).toBe(200);
     expect(result.body.title).toBe('Jantar');
     expect(result.body.description).toBe('Comer apenas carne e salada');
   });

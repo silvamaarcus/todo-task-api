@@ -1,6 +1,6 @@
 import { TaskNotFoundError } from '../errors/index.js';
 import { updateTaskSchema } from '../schemas/task.js';
-import { badRequest, created, notFound, serverError } from './helpers/http.js';
+import { badRequest, notFound, ok, serverError } from './helpers/http.js';
 
 export class UpdateTaskController {
   constructor(updateTaskUseCase) {
@@ -24,7 +24,7 @@ export class UpdateTaskController {
         parsedParams.data,
       );
 
-      return created(updateTask);
+      return ok(updateTask);
     } catch (error) {
       if (error instanceof TaskNotFoundError) {
         return notFound({ message: error.message });
