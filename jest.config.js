@@ -12,4 +12,10 @@ export default {
   ],
   setupFilesAfterEnv: ['./src/tests/setup.js'],
   maxWorkers: 1, // Executa testes sequencialmente para evitar conflitos no banco
+  testEnvironmentOptions: {
+    env: {
+      DATABASE_URL:
+        'postgresql://postgres:password@localhost:5433/todo-task-test',
+    },
+  },
 };

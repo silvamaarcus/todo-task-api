@@ -9,7 +9,7 @@
     "source.fixAll.eslint": "explicit"
   },
   "jest.nodeEnv": {
-    "NODE_OPTIONS": "--experimental-vm-modules"
+    "DATABASE_URL": "postgresql://postgres:password@localhost:5433/todo-task-test"
   },
   "jest.jestCommandLine": "node --experimental-vm-modules node_modules/.bin/jest"
 }
