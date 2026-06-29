@@ -8,7 +8,7 @@ export class GetAllTasksController {
 
   async execute(httpRequest) {
     try {
-      const { status } = httpRequest.query;
+      const { status } = httpRequest.query || {};
 
       if (
         status &&
