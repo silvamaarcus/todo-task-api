@@ -19,15 +19,36 @@ describe('GetAllTasksController', () => {
   };
 
   const httpRequest = {
+    query: undefined,
     body: task,
   };
 
-  test('Deve retornar 200 quando as Taks forem encontradas', async () => {
+  test('Deve retornar 200 quando status é undefined', async () => {
     const { sut } = makeSut();
 
     const result = await sut.execute(httpRequest);
 
     expect(result.statusCode).toBe(200);
+  });
+
+  test('Deve retornar 200 quando status válido', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.execute({
+      query: { status: 'TODO' },
+    });
+
+    expect(result.statusCode).toBe(200);
+  });
+
+  test('Deve retornar 400 quando status inválido', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.execute({
+      query: { status: 'INVALIDO' },
+    });
+
+    expect(result.statusCode).toBe(400);
   });
 
   test('Deve retornar 500 quando ocorrer erro interno no servidor', async () => {
