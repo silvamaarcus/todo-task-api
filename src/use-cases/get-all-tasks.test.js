@@ -25,4 +25,34 @@ describe('GetAllTasksUseCase', () => {
 
     expect(tasksFounded).toEqual(tasks); // Verifica se o resultado é igual ao array de tarefas esperado
   });
+
+  test('Deve retornar todas as Tasks com filtro TODO', async () => {
+    const { sut, getAllTasksRepositoryStub } = makeSut();
+
+    const spy = import.meta.jest.spyOn(getAllTasksRepositoryStub, 'execute');
+
+    await sut.execute({ status: 'TODO' });
+
+    expect(spy).toHaveBeenCalledWith({ status: 'TODO' });
+  });
+
+  test('Deve retornar todas as Tasks com filtro IN_PROGRESS', async () => {
+    const { sut, getAllTasksRepositoryStub } = makeSut();
+
+    const spy = import.meta.jest.spyOn(getAllTasksRepositoryStub, 'execute');
+
+    await sut.execute({ status: 'IN_PROGRESS' });
+
+    expect(spy).toHaveBeenCalledWith({ status: 'IN_PROGRESS' });
+  });
+
+  test('Deve retornar todas as Tasks com filtro DONE', async () => {
+    const { sut, getAllTasksRepositoryStub } = makeSut();
+
+    const spy = import.meta.jest.spyOn(getAllTasksRepositoryStub, 'execute');
+
+    await sut.execute({ status: 'DONE' });
+
+    expect(spy).toHaveBeenCalledWith({ status: 'DONE' });
+  });
 });
