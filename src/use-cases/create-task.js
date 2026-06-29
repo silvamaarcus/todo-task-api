@@ -1,5 +1,3 @@
-import { TASK_TYPE } from '../constants/index.js';
-
 export class CreateTaskUseCase {
   constructor(idGeneratorAdapter, createTaskRepository) {
     this.idGeneratorAdapter = idGeneratorAdapter;
@@ -12,7 +10,6 @@ export class CreateTaskUseCase {
     const task = {
       ...createTaskParams,
       id: taskId,
-      status: TASK_TYPE.TODO,
     };
 
     const createdTask = await this.createTaskRepository.execute(task);
