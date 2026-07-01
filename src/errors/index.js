@@ -19,9 +19,9 @@ export class EmailAlreadyInUseError extends Error {
   }
 }
 
-export class InvalidCredentialsError extends Error {
+export class InvalidPasswordError extends Error {
   constructor() {
-    super('Credenciais inválidas. Tente novamente.');
-    this.name = 'InvalidCredentialsError';
+    super(`Senha inválida. Tente novamente.`);
+    this.name = 'InvalidPasswordError';
   }
 }
