@@ -1,10 +1,9 @@
-import { InvalidCredentialsError } from '../../errors/index.js';
+import { InvalidPasswordError, UserNotFoundError } from '../../errors/index.js';
 
 export class LoginUserUseCase {
   constructor(
     getUserByEmailRepository,
     passwordComparatorAdapter,
-
     tokensGeneratorAdapter,
   ) {
     this.getUserByEmailRepository = getUserByEmailRepository;
@@ -17,20 +16,20 @@ export class LoginUserUseCase {
     );
 
     if (!user) {
-      throw new InvalidCredentialsError(loginUserParams.email);
+      throw new UserNotFoundError(loginUserParams.email);
     }
 
-    const comparePassword = await this.passwordComparatorAdapter.execute(
+    const isPasswordCorrect = await this.passwordComparatorAdapter.execute(
       loginUserParams.password,
       user.password,
     );
 
-    if (!comparePassword) {
-      throw new InvalidCredentialsError(loginUserParams.email);
+    if (!isPasswordCorrect) {
+      throw new InvalidPasswordError();
     }
 
     const tokens = await this.tokensGeneratorAdapter.execute(user.id);
 
-    return tokens;
+    return { ...user, tokens };
   }
 }
