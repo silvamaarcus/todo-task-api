@@ -1,5 +1,5 @@
-import { createTaskSchema } from '../schemas/task.js';
-import { badRequest, created, serverError } from './helpers/http.js';
+import { createTaskSchema } from '../../schemas/task.js';
+import { badRequest, created, serverError } from '../helpers/http.js';
 
 export class CreateTaskController {
   constructor(createTaskUseCase) {

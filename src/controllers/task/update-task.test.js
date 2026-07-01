@@ -1,5 +1,5 @@
-import { TaskNotFoundError } from '../errors';
-import { task } from '../tests/fixtures/tasks';
+import { TaskNotFoundError } from '../../errors';
+import { task } from '../../tests/fixtures/tasks';
 import { UpdateTaskController } from './update-task';
 
 describe('UpdateTaskController', () => {

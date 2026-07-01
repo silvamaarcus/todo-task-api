@@ -1,5 +1,5 @@
-import { TASK_TYPE } from '../constants/index.js';
-import { badRequest, ok, serverError } from './helpers/http.js';
+import { TASK_TYPE } from '../../constants/index.js';
+import { badRequest, ok, serverError } from '../helpers/http.js';
 
 export class GetAllTasksController {
   constructor(getAllTasksTaskUseCase) {

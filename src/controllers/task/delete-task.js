@@ -1,5 +1,5 @@
-import { TaskNotFoundError } from '../errors/index.js';
-import { notFound, ok, serverError } from './helpers/http.js';
+import { TaskNotFoundError } from '../../errors/index.js';
+import { notFound, ok, serverError } from '../helpers/http.js';
 
 export class DeleteTaskController {
   constructor(deleteTaskUseCase) {

@@ -1,5 +1,5 @@
-import { TaskNotFoundError } from '../errors';
-import { task } from '../tests/fixtures/tasks';
+import { TaskNotFoundError } from '../../errors';
+import { task } from '../../tests/fixtures/tasks';
 import { DeleteTaskController } from './delete-task';
 
 describe('DeleteTaskController', () => {

@@ -1,4 +1,4 @@
-import { task } from '../tests/fixtures/tasks';
+import { task } from '../../tests/fixtures/tasks';
 import { CreateTaskController } from './create-task';
 
 describe('CreateTaskController', () => {

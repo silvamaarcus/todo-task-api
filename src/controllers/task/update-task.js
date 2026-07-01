@@ -1,6 +1,6 @@
-import { TaskNotFoundError } from '../errors/index.js';
-import { updateTaskSchema } from '../schemas/task.js';
-import { badRequest, notFound, ok, serverError } from './helpers/http.js';
+import { TaskNotFoundError } from '../../errors/index.js';
+import { updateTaskSchema } from '../../schemas/task.js';
+import { badRequest, notFound, ok, serverError } from '../helpers/http.js';
 
 export class UpdateTaskController {
   constructor(updateTaskUseCase) {
