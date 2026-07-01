@@ -8,7 +8,7 @@ export class UpdateUserRepository {
     try {
       const user = await prisma.user.update({
         where: { id: userId },
-        data: { updateUserParams },
+        data: updateUserParams,
       });
 
       return user;
