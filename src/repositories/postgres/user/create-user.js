@@ -1,8 +1,8 @@
-import { prisma } from '../../../../prisma/prisma';
+import { prisma } from '../../../../prisma/prisma.js';
 
 export class CreateUserRepository {
   async execute(createUserParams) {
-    const user = await prisma.create({
+    const user = await prisma.user.create({
       data: {
         id: createUserParams.id,
         name: createUserParams.name,
