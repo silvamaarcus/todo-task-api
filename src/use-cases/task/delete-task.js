@@ -1,4 +1,4 @@
-import { TaskNotFoundError } from '../errors/index.js';
+import { TaskNotFoundError } from '../../errors/index.js';
 
 export class DeleteTaskUseCase {
   constructor(getTaskByIdRepository, deleteTaskRepository) {

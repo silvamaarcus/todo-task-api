@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { jest } from '@jest/globals';
 
+import { newTask, task } from '../../tests/fixtures/tasks.js';
 import { TaskNotFoundError } from '../errors.js';
-import { newTask, task } from '../tests/fixtures/tasks.js';
 import { UpdateTaskUseCase } from './update-task.js';
 
 describe('UpdateTaskUseCase', () => {

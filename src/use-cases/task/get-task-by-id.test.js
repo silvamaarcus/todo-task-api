@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { jest } from '@jest/globals';
 
-import { TaskNotFoundError } from '../errors/index.js';
-import { task } from '../tests/fixtures/tasks.js';
+import { TaskNotFoundError } from '../../errors/index.js';
+import { task } from '../../tests/fixtures/tasks.js';
 import { GetTaskByIdUseCase } from './get-task-by-id.js';
 
 describe('GetTaskByIdUseCase', () => {
