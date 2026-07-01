@@ -1,7 +1,7 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
-import { prisma } from '../../../prisma/prisma.js';
-import { TaskNotFoundError } from '../../errors/index.js';
+import { prisma } from '../../../../prisma/prisma.js';
+import { TaskNotFoundError } from '../../../errors/index.js';
 
 export class DeleteTaskRepository {
   async execute(taskId) {

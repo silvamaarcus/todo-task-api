@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
-import { prisma } from '../../../prisma/prisma';
-import { task } from '../../tests/fixtures/tasks';
+import { prisma } from '../../../../prisma/prisma';
+import { task } from '../../../tests/fixtures/tasks';
 import { CreateTaskRepository } from './create-task';
 import { GetTaskByIdRepository } from './get-task-by-id';
 

@@ -1,5 +1,5 @@
-import { prisma } from '../../../prisma/prisma.js';
-import { task } from '../../tests/fixtures/tasks.js';
+import { prisma } from '../../../../prisma/prisma.js';
+import { task } from '../../../tests/fixtures/tasks.js';
 import { CreateTaskRepository } from './create-task.js';
 
 describe('CreateTaskRepository', () => {

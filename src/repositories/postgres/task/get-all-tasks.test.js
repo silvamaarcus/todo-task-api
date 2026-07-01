@@ -1,4 +1,4 @@
-import { tasks } from '../../tests/fixtures/tasks.js';
+import { tasks } from '../../../tests/fixtures/tasks.js';
 import { CreateTaskRepository } from './create-task';
 import { GetAllTasksRepository } from './get-all-tasks.js';
 

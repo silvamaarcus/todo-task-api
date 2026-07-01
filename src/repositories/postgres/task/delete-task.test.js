@@ -1,8 +1,8 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
-import { prisma } from '../../../prisma/prisma';
-import { TaskNotFoundError } from '../../errors';
-import { task } from '../../tests/fixtures/tasks';
+import { prisma } from '../../../../prisma/prisma';
+import { TaskNotFoundError } from '../../../errors';
+import { task } from '../../../tests/fixtures/tasks';
 import { DeleteTaskRepository } from './delete-task';
 
 describe('DeleteTaskRepository', () => {
