@@ -29,6 +29,9 @@ export class UpdateUserUseCase {
         throw new UserNotFoundError(updateUserParams.email);
       }
     }
+    const user = {
+      ...updateUserParams,
+    };
 
     //* ATUALIZAÇÃO DE SENHA
 
@@ -41,10 +44,6 @@ export class UpdateUserUseCase {
 
       user.password = hashedPassword; // Atualiza a senha do usuário com a nova senha criptografada
     }
-
-    const user = {
-      ...updateUserParams,
-    };
 
     const updatedUser = await this.updateUserRepository.execute(userId, user);
 
