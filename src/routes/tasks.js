@@ -7,11 +7,12 @@ import {
   makeGetTaskByIdController,
   makeUpdateTaskController,
 } from '../factories/tasks.js';
+import { auth } from '../middlewares/auth.js';
 
 export const tasksRouter = Router();
 
 // Rota p/ criar uma 'Task'
-tasksRouter.post('/', async (req, res) => {
+tasksRouter.post('/', auth, async (req, res) => {
   // Aciona a Factory
   const createTaskController = makeCreateTaskController();
   // Executa a Factory
@@ -21,7 +22,7 @@ tasksRouter.post('/', async (req, res) => {
 });
 
 // Rota p/ obter todas as 'Tasks' (com ou sem filtro de status)
-tasksRouter.get('/', async (req, res) => {
+tasksRouter.get('/', auth, async (req, res) => {
   const getAllTasksController = makeGetAllTasksController();
 
   const { statusCode, body } = await getAllTasksController.execute(req);
@@ -30,7 +31,7 @@ tasksRouter.get('/', async (req, res) => {
 });
 
 // Rota p/ obter uma 'Task' por ID
-tasksRouter.get('/:id', async (req, res) => {
+tasksRouter.get('/:id', auth, async (req, res) => {
   const getTaskByIdController = makeGetTaskByIdController();
 
   const { statusCode, body } = await getTaskByIdController.execute(req);
@@ -39,7 +40,7 @@ tasksRouter.get('/:id', async (req, res) => {
 });
 
 // Rota p/ atualizar uma 'Task' por ID
-tasksRouter.patch('/:id', async (req, res) => {
+tasksRouter.patch('/:id', auth, async (req, res) => {
   const updateTaskController = makeUpdateTaskController();
 
   const { statusCode, body } = await updateTaskController.execute(req);
@@ -48,7 +49,7 @@ tasksRouter.patch('/:id', async (req, res) => {
 });
 
 // Rota p/ deletar uma 'Task' por ID
-tasksRouter.delete('/:id', async (req, res) => {
+tasksRouter.delete('/:id', auth, async (req, res) => {
   const deleteTaskController = makeDeleteTaskController();
 
   const { statusCode, body } = await deleteTaskController.execute(req);
