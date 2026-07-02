@@ -20,7 +20,7 @@ describe('GetUserByIdController', () => {
 
   const httpRequest = {
     params: {
-      userId: user.id,
+      id: user.id,
     },
   };
 
@@ -34,18 +34,17 @@ describe('GetUserByIdController', () => {
   });
 
   test('Deve retornar 400 quando um ID não for válido', async () => {
-    const { sut, getUserByIdUseCaseStub } = makeSut();
-    import.meta.jest
-      .spyOn(getUserByIdUseCaseStub, 'execute')
-      .mockResolvedValueOnce(user);
+    const { sut } = makeSut();
 
-    const promise = await sut.execute({
+    const invalidHttpRequest = {
       params: {
-        userId: null,
+        id: 'invalid-id',
       },
-    });
+    };
 
-    expect(promise.statusCode).toBe(400);
+    const result = await sut.execute(invalidHttpRequest);
+
+    expect(result.statusCode).toBe(400);
   });
 
   test('Deve retornar 404 quando um usuário não for encontrado', async () => {
