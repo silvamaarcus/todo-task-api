@@ -130,3 +130,25 @@ test('DELETE /api/users/:userId deve deletar um usuário pelo ID', async () => {
 
   expect(response.status).toBe(200);
 });
+
+//* =========== LOGIN ===========
+
+test('POST /api/users/login deve autenticar um usuário e retornar um token', async () => {
+  // Cria um usuário
+  await request(app).post('/api/users').send({
+    name: 'Marcus',
+    last_name: 'Silva',
+    email: 'marcus@email.com',
+    password: '123456',
+  });
+
+  // Autentica o usuário
+  const response = await request(app).post('/api/users/login').send({
+    email: 'marcus@email.com',
+    password: '123456',
+  });
+
+  expect(response.status).toBe(200);
+  expect(response.body.tokens).toHaveProperty('accessToken');
+  expect(response.body.tokens).toHaveProperty('refreshToken');
+});
