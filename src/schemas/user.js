@@ -21,3 +21,15 @@ export const createUserSchema = z.object({
 });
 
 export const updateUserSchema = createUserSchema.partial();
+
+export const loginUserSchema = z.object({
+  email: z
+    .string('O email é obrigatório.')
+    .trim()
+    .email('Formato de e-mail inválido, tente novamente.')
+    .min(1, { message: 'Email deve conter no mínimo 1 caractere.' }),
+  password: z
+    .string('A senha é obrigatória.')
+    .trim()
+    .min(6, { message: 'Senha deve conter no mínimo 6 caracteres.' }),
+});
