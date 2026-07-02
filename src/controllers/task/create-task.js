@@ -18,7 +18,7 @@ export class CreateTaskController {
         return badRequest({ message: parsedParams.error.issues[0].message });
       }
 
-      // Aplica regra de negócio nos dados validados (parsedParams)
+      // Envia os dados validados e userId para aplicação de negócio (use case) criar a task
       const task = await this.createTaskUseCase.execute(parsedParams.data);
 
       // Retorna sucesso com task criada
