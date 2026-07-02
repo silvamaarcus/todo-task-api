@@ -1,6 +1,6 @@
 import { ok, serverError } from '../helpers/http.js';
 import { userNotFoundResponse } from '../helpers/user.js';
-import { invalidIdResponse } from '../helpers/validation.js';
+import { checkIfIdIsValid, invalidIdResponse } from '../helpers/validation.js';
 
 export class GetUserByIdController {
   constructor(getUserByIdUseCase) {
@@ -9,13 +9,15 @@ export class GetUserByIdController {
 
   async execute(httpRequest) {
     try {
-      const idIsValid = httpRequest.params.userId;
+      const userId = httpRequest.params.id;
 
-      if (!idIsValid) {
+      const isIdValid = checkIfIdIsValid(userId);
+
+      if (!isIdValid) {
         return invalidIdResponse();
       }
 
-      const user = await this.getUserByIdUseCase.execute(idIsValid);
+      const user = await this.getUserByIdUseCase.execute(userId);
 
       if (!user) {
         return userNotFoundResponse();
