@@ -16,7 +16,13 @@ tasksRouter.post('/', auth, async (req, res) => {
   // Aciona a Factory
   const createTaskController = makeCreateTaskController();
   // Executa a Factory
-  const { statusCode, body } = await createTaskController.execute(req);
+  const { statusCode, body } = await createTaskController.execute({
+    ...req,
+    body: {
+      ...req.body,
+      user_id: req.userId, // sobrescreve com o userId do token
+    },
+  });
   // Retorna resposta p/ cliente c/ status e corpo da resposta
   res.status(statusCode).json(body);
 });
@@ -25,7 +31,13 @@ tasksRouter.post('/', auth, async (req, res) => {
 tasksRouter.get('/', auth, async (req, res) => {
   const getAllTasksController = makeGetAllTasksController();
 
-  const { statusCode, body } = await getAllTasksController.execute(req);
+  const { statusCode, body } = await getAllTasksController.execute({
+    ...req,
+    body: {
+      ...req.body,
+      user_id: req.userId,
+    },
+  });
 
   res.status(statusCode).json(body);
 });
@@ -34,7 +46,13 @@ tasksRouter.get('/', auth, async (req, res) => {
 tasksRouter.get('/:id', auth, async (req, res) => {
   const getTaskByIdController = makeGetTaskByIdController();
 
-  const { statusCode, body } = await getTaskByIdController.execute(req);
+  const { statusCode, body } = await getTaskByIdController.execute({
+    ...req,
+    body: {
+      ...req.body,
+      user_id: req.userId,
+    },
+  });
 
   res.status(statusCode).json(body);
 });
@@ -43,7 +61,13 @@ tasksRouter.get('/:id', auth, async (req, res) => {
 tasksRouter.patch('/:id', auth, async (req, res) => {
   const updateTaskController = makeUpdateTaskController();
 
-  const { statusCode, body } = await updateTaskController.execute(req);
+  const { statusCode, body } = await updateTaskController.execute({
+    ...req,
+    body: {
+      ...req.body,
+      user_id: req.userId,
+    },
+  });
 
   res.status(statusCode).json(body);
 });
@@ -52,7 +76,13 @@ tasksRouter.patch('/:id', auth, async (req, res) => {
 tasksRouter.delete('/:id', auth, async (req, res) => {
   const deleteTaskController = makeDeleteTaskController();
 
-  const { statusCode, body } = await deleteTaskController.execute(req);
+  const { statusCode, body } = await deleteTaskController.execute({
+    ...req,
+    body: {
+      ...req.body,
+      user_id: req.userId,
+    },
+  });
 
   res.status(statusCode).json(body);
 });
