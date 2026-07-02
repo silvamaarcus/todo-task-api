@@ -38,6 +38,20 @@ export const badRequest = (body) => {
 };
 
 /**
+ * Função para retornar uma resposta HTTP com status 401 (Unauthorized).
+ * Indica que o cliente não está autorizado a acessar o recurso solicitado.
+ * @returns {object} - Objeto contendo o statusCode e o corpo da resposta.
+ */
+export const unauthorized = () => {
+  return {
+    statusCode: 401,
+    body: {
+      message: 'Sem autorização para acessar este recurso.',
+    },
+  };
+};
+
+/**
  * Função para retornar uma resposta HTTP com status 404 (Not Found).
  * Indica que o recurso solicitado não foi encontrado no servidor.
  * @param {any} body - O corpo da resposta.
