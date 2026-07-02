@@ -41,6 +41,7 @@ describe('CreateTaskUseCase', () => {
     const createTask = await sut.execute(task);
 
     expect(createTask).toBeTruthy();
+    expect(createTask.user_id).toBeDefined();
     expect(createTask.id).toBeDefined();
     expect(createTask.title).toBe(task.title);
     expect(createTask.description).toBe(task.description);
