@@ -38,6 +38,38 @@ describe('UpdateUserController', () => {
     expect(result.body).toEqual(httpRequest.body);
   });
 
+  test('Deve retornar 400 quando um ID não for válido', async () => {
+    const { sut } = makeSut();
+
+    const invalidHttpRequest = {
+      params: {
+        id: 'invalid-id',
+      },
+    };
+
+    const result = await sut.execute(invalidHttpRequest);
+
+    expect(result.statusCode).toBe(400);
+  });
+
+  test('Deve retornar 400 quando parametros incorretos', async () => {
+    const { sut } = makeSut();
+
+    const invalidHttpRequest = {
+      params: {
+        id: user.id,
+      },
+      body: {
+        email: 'invalid-email',
+        password: '123',
+      },
+    };
+
+    const result = await sut.execute(invalidHttpRequest);
+
+    expect(result.statusCode).toBe(400);
+  });
+
   test('Deve retornar 400 quando ocorrer erro EmailAlreadyInUseError', async () => {
     const { sut, updateUserUseCaseStub } = makeSut();
     import.meta.jest
