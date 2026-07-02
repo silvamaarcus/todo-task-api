@@ -1,7 +1,10 @@
-import { EmailAlreadyInUseError, UserNotFoundError } from '../../errors';
+import {
+  EmailAlreadyInUseError,
+  UserNotFoundError,
+} from '../../errors/index.js';
 import { updateUserSchema } from '../../schemas/user.js';
 import { badRequest, ok, serverError } from '../helpers/http.js';
-import { userNotFoundResponse } from '../helpers/user';
+import { userNotFoundResponse } from '../helpers/user.js';
 import { checkIfIdIsValid, invalidIdResponse } from '../helpers/validation.js';
 
 export class UpdateUserController {
