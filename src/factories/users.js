@@ -1,4 +1,5 @@
 import { IdGeneratorAdapter } from '../adapters/id-generator.js';
+import { PasswordComparatorAdapter } from '../adapters/password-comparator.js';
 import { PasswordHasherAdapter } from '../adapters/password-hasher.js';
 import { TokensGeneratorAdapter } from '../adapters/token-generator.js';
 import {
@@ -7,6 +8,7 @@ import {
   GetUserByIdController,
   UpdateUserController,
 } from '../controllers/index.js';
+import { LoginUserController } from '../controllers/user/login-user.js';
 import {
   CreateUserRepository,
   DeleteUserRepository,
@@ -20,6 +22,7 @@ import {
   GetUserByIdUseCase,
   UpdateUserUseCase,
 } from '../use-cases/index.js';
+import { LoginUserUseCase } from '../use-cases/user/login-user.js';
 
 // * Forma de ler: Repository (Banco de Dados) -> UseCase (Regra de Negócio) -> Controller (Requisição HTTP)
 
@@ -81,4 +84,22 @@ export const makeDeleteUserController = () => {
   );
   // 3. Recebe a requisição p/ deletar um 'User' e retorna a resposta
   return new DeleteUserController(deleteUserUseCase);
+};
+
+// Factory c/ injeção de dependência p/ login de um 'User'
+export const makeLoginUserController = () => {
+  // 1. Repositories e adapters necessários p/ login de um 'User'
+  const getUserByEmailRepository = new GetUserByEmailRepository(); // Busca usuário pelo email
+  const passwordComparatorAdapter = new PasswordComparatorAdapter(); // Compara senha com hash
+  const tokensGeneratorAdapter = new TokensGeneratorAdapter(); // Gera os tokens JWT
+
+  // 2. Aplica a regra de negócio p/ login de um 'User'
+  const loginUserUseCase = new LoginUserUseCase(
+    getUserByEmailRepository,
+    passwordComparatorAdapter,
+    tokensGeneratorAdapter,
+  );
+
+  // 3. Recebe a requisição p/ login de um 'User' e retorna a resposta
+  return new LoginUserController(loginUserUseCase);
 };
