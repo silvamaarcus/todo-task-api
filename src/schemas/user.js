@@ -19,3 +19,5 @@ export const createUserSchema = z.object({
     .trim()
     .min(6, { message: 'Senha deve conter no mínimo 6 caracteres.' }),
 });
+
+export const updateUserSchema = createUserSchema.partial();
