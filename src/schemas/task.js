@@ -3,6 +3,9 @@ import z from 'zod';
 import { TASK_TYPE } from '../constants/index.js';
 
 export const createTaskSchema = z.object({
+  user_id: z.string().trim().uuid({
+    message: 'ID do usuário inválido!',
+  }),
   title: z
     .string()
     .trim()
@@ -16,6 +19,7 @@ export const createTaskSchema = z.object({
 });
 
 export const updateTaskSchema = createTaskSchema
+  .omit({ user_id: true }) // remove o campo user_id do schema de atualização
   .extend({
     status: z
       .enum([TASK_TYPE.TODO, TASK_TYPE.IN_PROGRESS, TASK_TYPE.DONE], {
