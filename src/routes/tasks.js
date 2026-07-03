@@ -33,6 +33,7 @@ tasksRouter.get('/', auth, async (req, res) => {
 
   const { statusCode, body } = await getAllTasksController.execute({
     ...req,
+    query: req.query, // adiciona query params para filtro de status
     body: {
       ...req.body,
       user_id: req.userId,
