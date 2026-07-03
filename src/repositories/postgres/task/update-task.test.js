@@ -1,17 +1,32 @@
+import { faker } from '@faker-js/faker';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 import { prisma } from '../../../../prisma/prisma.js';
-import { TaskNotFoundError } from '../../../errors';
-import { newTask, task } from '../../../tests/fixtures/tasks';
-import { UpdateTaskRepository } from './update-task';
+import { TaskNotFoundError } from '../../../errors/index.js';
+import { newTask, task } from '../../../tests/fixtures/tasks.js';
+import { user } from '../../../tests/fixtures/users.js';
+import { CreateUserRepository } from '../user/create-user.js';
+import { CreateTaskRepository } from './create-task.js';
+import { UpdateTaskRepository } from './update-task.js';
 
 describe('UpdateTaskRepository', () => {
-  test('Deve atualizar uma Task', async () => {
-    const sut = new UpdateTaskRepository();
-    await prisma.task.create({ data: task }); // Cria a Task
-    const updateTaskParams = newTask;
+  test('Deve atualizar uma Task na db', async () => {
+    // Cria um usuário com o mesmo ID que a task espera
+    const createUserRepository = new CreateUserRepository();
+    const userId = faker.string.uuid();
+    await createUserRepository.execute({
+      ...user,
+      id: userId, // Garante que o user_id seja o mesmo da task
+    });
 
-    const result = await sut.execute(task.id, updateTaskParams);
+    // Cria uma Task no banco de dados
+    const createTask = new CreateTaskRepository();
+    await createTask.execute({ ...task, user_id: userId });
+    // Envia os parâmetros de atualização para a Task c/ o mesmo user_id
+    const updateTaskParams = { ...newTask, user_id: userId };
+    const sut = new UpdateTaskRepository();
+
+    const result = await sut.execute(task.id, userId, updateTaskParams);
 
     expect(result.title).toBe('Novo Teste');
     expect(result.description).toBe('Comentário editato!');
@@ -19,14 +34,19 @@ describe('UpdateTaskRepository', () => {
 
   test('Deve garantir que o Prisma recebeu parametros corretos', async () => {
     const sut = new UpdateTaskRepository();
-    await prisma.task.create({ data: task });
-    const prismaSpy = import.meta.jest.spyOn(prisma.task, 'update');
+    import.meta.jest
+      .spyOn(prisma.task, 'update')
+      .mockResolvedValueOnce({ ...task, ...newTask }); // Simula a atualização da Task
+
     const updateTaskParams = newTask;
 
-    await sut.execute(task.id, updateTaskParams);
+    await sut.execute(task.id, task.user_id, updateTaskParams);
 
-    expect(prismaSpy).toHaveBeenCalledWith({
-      where: { id: task.id },
+    expect(prisma.task.update).toHaveBeenCalledWith({
+      where: {
+        user_id: task.user_id,
+        id: task.id,
+      },
       data: updateTaskParams,
     });
   });
