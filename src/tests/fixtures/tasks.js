@@ -16,26 +16,30 @@ export const newTask = {
   status: 'IN_PROGRESS',
 };
 
-export const tasks = [
-  {
-    user_id: '59763d79-fee1-4bdb-ab27-ff8a690744fa',
-    id: faker.string.uuid(),
-    title: 'Tarefa teste 1',
-    description: 'Descrição da tarefa teste 1',
-    status: 'TODO',
-  },
-  {
-    user_id: '59763d79-fee1-4bdb-ab27-ff8a690744fa',
-    id: faker.string.uuid(),
-    title: 'Tarefa teste 2',
-    description: 'Descrição da tarefa teste 2',
-    status: 'IN_PROGRESS',
-  },
-  {
-    user_id: '59763d79-fee1-4bdb-ab27-ff8a690744fa',
-    id: faker.string.uuid(),
-    title: 'Tarefa teste 3',
-    description: 'Descrição da tarefa teste 3',
-    status: 'DONE',
-  },
-];
+// Task do mesmo usuário, mas com status diferente
+
+const userId = faker.string.uuid();
+
+export const task_todo = {
+  user_id: userId,
+  id: faker.string.uuid(),
+  title: 'Tarefa teste 1',
+  description: 'Descrição da tarefa teste 1',
+  status: 'TODO',
+};
+
+export const task_in_progress = {
+  user_id: userId,
+  id: faker.string.uuid(),
+  title: 'Tarefa teste 2',
+  description: 'Descrição da tarefa teste 2',
+  status: 'IN_PROGRESS',
+};
+
+export const task_done = {
+  user_id: userId,
+  id: faker.string.uuid(),
+  title: 'Tarefa teste 3',
+  description: 'Descrição da tarefa teste 3',
+  status: 'DONE',
+};
