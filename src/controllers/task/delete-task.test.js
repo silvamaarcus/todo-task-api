@@ -34,6 +34,19 @@ describe('DeleteTaskController', () => {
     expect(result.statusCode).toBe(200);
   });
 
+  test('Deve retornar 400 quando user_id não for válido', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.execute({
+      params: {
+        id: task.id,
+      },
+      body: { user_id: '' }, // ID inválido
+    });
+
+    expect(result.statusCode).toBe(404);
+  });
+
   test('Deve retornar 404 quando a Task não for encontrada', async () => {
     const { sut, deleteTaskUseCaseStub } = makeSut();
 
