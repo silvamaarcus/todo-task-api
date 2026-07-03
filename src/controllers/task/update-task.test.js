@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 import { TaskNotFoundError } from '../../errors';
 import { task } from '../../tests/fixtures/tasks';
 import { UpdateTaskController } from './update-task';
@@ -21,10 +23,12 @@ describe('UpdateTaskController', () => {
 
   test('Deve retornar 200 quando uma Task for atualizada com sucesso', async () => {
     const { sut, updateTaskUseCaseStub } = makeSut();
+    const userId = faker.string.uuid();
     const updatedTask = {
       ...task,
       title: 'Jantar',
       description: 'Comer apenas carne e salada',
+      user_id: userId,
     };
     import.meta.jest
       .spyOn(updateTaskUseCaseStub, 'execute')
@@ -37,6 +41,7 @@ describe('UpdateTaskController', () => {
       body: {
         title: 'Jantar',
         description: 'Comer apenas carne e salada',
+        user_id: userId,
       },
     });
 
@@ -98,10 +103,27 @@ describe('UpdateTaskController', () => {
       },
       body: {
         title: 'Jantar',
+        user_id: faker.string.uuid(),
       },
     });
 
     expect(result.statusCode).toBe(404);
+  });
+
+  test('Deve retornar 400 quando ID inválido', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.execute({
+      params: {
+        id: 'invalid-id',
+      },
+      body: {
+        title: 'Jantar',
+        user_id: '',
+      },
+    });
+
+    expect(result.statusCode).toBe(400);
   });
 
   test('Deve retornar 500 quando ocorrer erro interno no servidor', async () => {
@@ -117,6 +139,7 @@ describe('UpdateTaskController', () => {
       body: {
         title: 'Jantar',
         description: 'Comer apenas carne e salada',
+        user_id: faker.string.uuid(),
       },
     });
 
