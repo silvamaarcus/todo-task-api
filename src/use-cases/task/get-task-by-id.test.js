@@ -22,9 +22,10 @@ describe('GetTaskByIdUseCase', () => {
 
   test('Retorna a tarefa quando ela existe', async () => {
     const { sut } = makeSut();
+    const taskId = task.id;
+    const userId = task.user_id;
 
-    const taskId = faker.string.uuid();
-    const foundTask = await sut.execute(taskId);
+    const foundTask = await sut.execute(taskId, userId);
 
     expect(foundTask).toBeTruthy();
     expect(foundTask.id).toBeDefined();
@@ -43,5 +44,17 @@ describe('GetTaskByIdUseCase', () => {
 
     // Verificamos que o use case lança o erro correto
     await expect(sut.execute(taskId)).rejects.toThrow(TaskNotFoundError);
+  });
+
+  test('Lança TaskNotFoundError quando a tarefa não pertence ao usuário', async () => {
+    const { sut } = makeSut();
+
+    const taskId = task.id;
+    const userId = faker.string.uuid(); // ID de usuário diferente do da task
+
+    // Verificamos que o use case lança o erro correto
+    await expect(sut.execute(taskId, userId)).rejects.toThrow(
+      TaskNotFoundError,
+    );
   });
 });
