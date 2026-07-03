@@ -10,7 +10,13 @@ export class DeleteTaskController {
     try {
       const taskId = httpRequest.params.id;
 
-      const deleteTask = await this.deleteTaskUseCase.execute(taskId);
+      const userId = httpRequest.body.user_id;
+
+      if (!userId) {
+        return notFound({ message: 'O user_id é obrigátorio.' });
+      }
+
+      const deleteTask = await this.deleteTaskUseCase.execute(taskId, userId);
 
       return ok(deleteTask);
     } catch (error) {
