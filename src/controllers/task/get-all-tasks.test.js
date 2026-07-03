@@ -31,11 +31,34 @@ describe('GetAllTasksController', () => {
     expect(result.statusCode).toBe(200);
   });
 
-  test('Deve retornar 200 quando status válido', async () => {
+  test('Deve retornar 200 quando status TODO aplicado como filtro', async () => {
     const { sut } = makeSut();
 
     const result = await sut.execute({
       query: { status: 'TODO' },
+      body: task,
+    });
+
+    expect(result.statusCode).toBe(200);
+  });
+
+  test('Deve retornar 200 quando status IN_PROGRESS aplicado como filtro', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.execute({
+      query: { status: 'IN_PROGRESS' },
+      body: task,
+    });
+
+    expect(result.statusCode).toBe(200);
+  });
+
+  test('Deve retornar 200 quando status DONE aplicado como filtro', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.execute({
+      query: { status: 'DONE' },
+      body: task,
     });
 
     expect(result.statusCode).toBe(200);
@@ -46,6 +69,18 @@ describe('GetAllTasksController', () => {
 
     const result = await sut.execute({
       query: { status: 'INVALIDO' },
+      body: task,
+    });
+
+    expect(result.statusCode).toBe(400);
+  });
+
+  test('Deve retornar 400 quando ID inválido', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.execute({
+      query: { status: 'TODO' },
+      body: { ...task, user_id: '' }, // ID inválido
     });
 
     expect(result.statusCode).toBe(400);
