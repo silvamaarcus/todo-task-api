@@ -23,11 +23,11 @@ const createUserAndLogin = async () => {
 };
 
 describe('Rotas E2E para Tasks', () => {
-  test('POST /api/tasks deve criar uma Task', async () => {
+  test('POST /api/tasks/me deve criar uma Task', async () => {
     const accessToken = await createUserAndLogin();
 
     const response = await request(app)
-      .post('/api/tasks')
+      .post('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({ title: 'Teste', description: 'Descrição' });
 
@@ -35,22 +35,22 @@ describe('Rotas E2E para Tasks', () => {
     expect(response.body.title).toBe('Teste');
   });
 
-  test('GET /api/tasks buscar todas as Tasks', async () => {
+  test('GET /api/tasks/me buscar todas as Tasks', async () => {
     const accessToken = await createUserAndLogin();
 
     // Cria Tasks
     await request(app)
-      .post('/api/tasks')
+      .post('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({ title: 'Teste', description: 'Descrição' });
     await request(app)
-      .post('/api/tasks')
+      .post('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({ title: 'Teste 2', description: 'Descrição 2' });
 
     // Busca Tasks
     const response = await request(app)
-      .get('/api/tasks')
+      .get('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.status).toBe(200);
@@ -59,12 +59,12 @@ describe('Rotas E2E para Tasks', () => {
     expect(response.body[1].title).toBe('Teste 2');
   });
 
-  test('GET /api/tasks?status=TODO buscar todas as Tasks com filtro TODO', async () => {
+  test('GET /api/tasks/me?status=TODO buscar todas as Tasks com filtro TODO', async () => {
     const accessToken = await createUserAndLogin();
 
     // Cria Tasks
     await request(app)
-      .post('/api/tasks')
+      .post('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({ title: 'Teste', description: 'Descrição' });
     await request(app)
@@ -78,23 +78,23 @@ describe('Rotas E2E para Tasks', () => {
 
     // Busca Tasks com filtro TODO
     const response = await request(app)
-      .get('/api/tasks?status=TODO')
+      .get('/api/tasks/me?status=TODO')
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(1);
   });
 
-  test('GET /api/tasks?status=IN_PROGRESS buscar todas as Tasks com filtro IN_PROGRESS', async () => {
+  test('GET /api/tasks/me?status=IN_PROGRESS buscar todas as Tasks com filtro IN_PROGRESS', async () => {
     const accessToken = await createUserAndLogin();
 
     // Cria Tasks
     await request(app)
-      .post('/api/tasks')
+      .post('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({ title: 'Teste', description: 'Descrição' });
     await request(app)
-      .post('/api/tasks')
+      .post('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         title: 'Teste 2',
@@ -104,23 +104,23 @@ describe('Rotas E2E para Tasks', () => {
 
     // Busca Tasks com filtro IN_PROGRESS
     const response = await request(app)
-      .get('/api/tasks?status=IN_PROGRESS')
+      .get('/api/tasks/me?status=IN_PROGRESS')
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(1);
   });
 
-  test('GET /api/tasks?status=DONE buscar todas as Tasks com filtro DONE', async () => {
+  test('GET /api/tasks/me?status=DONE buscar todas as Tasks com filtro DONE', async () => {
     const accessToken = await createUserAndLogin();
 
     // Cria Tasks
     await request(app)
-      .post('/api/tasks')
+      .post('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({ title: 'Teste', description: 'Descrição' });
     await request(app)
-      .post('/api/tasks')
+      .post('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         title: 'Teste 2',
@@ -130,19 +130,19 @@ describe('Rotas E2E para Tasks', () => {
 
     // Busca Tasks com filtro DONE
     const response = await request(app)
-      .get('/api/tasks?status=DONE')
+      .get('/api/tasks/me?status=DONE')
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(1);
   });
 
-  test('GET /api/tasks/:id buscar uma Task por ID', async () => {
+  test('GET /api/tasks/me/:id buscar uma Task por ID', async () => {
     const accessToken = await createUserAndLogin();
 
     // Cria Task
     const task = await request(app)
-      .post('/api/tasks')
+      .post('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({ title: 'Teste', description: 'Descrição' });
 
@@ -150,19 +150,19 @@ describe('Rotas E2E para Tasks', () => {
 
     // Busca Task com ID na URL
     const response = await request(app)
-      .get(`/api/tasks/${taskId}`)
+      .get(`/api/tasks/me/${taskId}`)
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.status).toBe(200);
     expect(response.body.title).toBe('Teste');
   });
 
-  test('PATCH /api/tasks/:id atualizar uma Task por ID', async () => {
+  test('PATCH /api/tasks/me/:id atualizar uma Task por ID', async () => {
     const accessToken = await createUserAndLogin();
 
     // Cria Task
     const task = await request(app)
-      .post('/api/tasks')
+      .post('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({ title: 'Teste', description: 'Descrição' });
 
@@ -174,7 +174,7 @@ describe('Rotas E2E para Tasks', () => {
 
     // Atualiza Task com ID na URL
     const response = await request(app)
-      .patch(`/api/tasks/${taskId}`)
+      .patch(`/api/tasks/me/${taskId}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send(updateTaskParams);
 
@@ -183,12 +183,12 @@ describe('Rotas E2E para Tasks', () => {
     expect(response.body.description).toBe('Descrição atualizada');
   });
 
-  test('DELETE /api/tasks/:id deletar uma Task por ID', async () => {
+  test('DELETE /api/tasks/me/:id deletar uma Task por ID', async () => {
     const accessToken = await createUserAndLogin();
 
     // Cria Task
     const task = await request(app)
-      .post('/api/tasks')
+      .post('/api/tasks/me')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({ title: 'Teste', description: 'Descrição' });
 
@@ -198,7 +198,7 @@ describe('Rotas E2E para Tasks', () => {
 
     // Deleta Task com ID na URL
     const response = await request(app)
-      .delete(`/api/tasks/${taskId}`)
+      .delete(`/api/tasks/me/${taskId}`)
       .set('Authorization', `Bearer ${accessToken}`);
 
     expect(response.status).toBe(200);
