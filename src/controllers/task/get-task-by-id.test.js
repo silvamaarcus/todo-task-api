@@ -1,6 +1,6 @@
-import { TaskNotFoundError } from '../../errors';
-import { task } from '../../tests/fixtures/tasks';
-import { GetTaskByIdController } from './get-task-by-id';
+import { TaskNotFoundError } from '../../errors/index.js';
+import { task } from '../../tests/fixtures/tasks.js';
+import { GetTaskByIdController } from './get-task-by-id.js';
 
 describe('GetTaskByIdController', () => {
   class GetTaskByIdUseCaseStub {
@@ -23,6 +23,9 @@ describe('GetTaskByIdController', () => {
     params: {
       id: task.id,
     },
+    body: {
+      user_id: task.user_id,
+    },
   };
 
   test('Deve retornar 200 quando uma Task for encontrada com sucesso', async () => {
@@ -32,6 +35,21 @@ describe('GetTaskByIdController', () => {
 
     expect(result.statusCode).toBe(200);
     expect(result.body).toEqual(task);
+  });
+
+  test('Deve retornar 400 quando uma Task tem userId inválido', async () => {
+    const { sut } = makeSut();
+
+    const result = await sut.execute({
+      params: {
+        id: task.id,
+      },
+      body: {
+        user_id: '',
+      },
+    });
+
+    expect(result.statusCode).toBe(400);
   });
 
   test('Deve retornar 404 quando a Task não for encontrada', async () => {
@@ -45,6 +63,9 @@ describe('GetTaskByIdController', () => {
     const result = await sut.execute({
       params: {
         id: taskId,
+      },
+      body: {
+        user_id: task.user_id,
       },
     });
 
