@@ -9,6 +9,7 @@ export class GetAllTasksController {
   async execute(httpRequest) {
     try {
       const { status } = httpRequest.query || {};
+      const { user_id } = httpRequest.body;
 
       if (
         status &&
@@ -21,7 +22,16 @@ export class GetAllTasksController {
         });
       }
 
-      const tasks = await this.getAllTasksTaskUseCase.execute({ status });
+      if (!user_id) {
+        return badRequest({
+          message: 'O user_id é obrigatório!',
+        });
+      }
+
+      const tasks = await this.getAllTasksTaskUseCase.execute({
+        status,
+        user_id,
+      });
 
       return ok(tasks);
     } catch (error) {
