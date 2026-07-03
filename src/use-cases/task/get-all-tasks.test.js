@@ -1,4 +1,8 @@
-import { tasks } from '../../tests/fixtures/tasks.js';
+import {
+  task_done,
+  task_in_progress,
+  task_todo,
+} from '../../tests/fixtures/tasks.js';
 import { GetAllTasksUseCase } from './get-all-tasks.js';
 
 describe('GetAllTasksUseCase', () => {
@@ -7,6 +11,8 @@ describe('GetAllTasksUseCase', () => {
       return tasks;
     }
   }
+
+  const tasks = [task_todo, task_in_progress, task_done];
 
   const makeSut = () => {
     const getAllTasksRepositoryStub = new GetAllTasksRepositoryStub();
