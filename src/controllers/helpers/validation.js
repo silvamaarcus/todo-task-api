@@ -11,10 +11,3 @@ export const invalidIdResponse = () => {
     message: 'ID inválido. Tente novamente.',
   });
 };
-
-// Retorna uma resposta de erro para campos obrigatórios ausentes
-export const requiredFieldsMissingResponse = (field) => {
-  return badRequest({
-    message: `O campo "${field}" é obrigatório. Por favor, forneça um valor válido.`,
-  });
-};
