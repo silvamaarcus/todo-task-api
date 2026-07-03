@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 import { prisma } from '../../../../prisma/prisma.js';
 import { task } from '../../../tests/fixtures/tasks.js';
 import { user } from '../../../tests/fixtures/users.js';
@@ -8,14 +10,14 @@ describe('CreateTaskRepository', () => {
   test('Deve salvar a Task no banco de dados', async () => {
     // Cria um usuário com o mesmo ID que a task espera
     const createUserRepository = new CreateUserRepository();
+    const userId = faker.string.uuid();
     await createUserRepository.execute({
       ...user,
-      id: task.user_id, // Garante que o user_id seja o mesmo da task
+      id: userId, // Garante que o user_id seja o mesmo da task
     });
-
     const sut = new CreateTaskRepository();
 
-    const createTask = await sut.execute(task);
+    const createTask = await sut.execute({ ...task, user_id: userId });
 
     expect(createTask.user_id).toBeDefined();
     expect(createTask.id).toBeDefined();
