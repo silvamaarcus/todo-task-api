@@ -19,16 +19,17 @@ describe('DeleteTaskController', () => {
     };
   };
 
-  const httpRequest = {
-    params: {
-      id: task.id,
-    },
-  };
-
   test('Deve retornar 200 quando uma Task for deletada com sucesso', async () => {
     const { sut } = makeSut();
 
-    const result = await sut.execute(httpRequest);
+    const result = await sut.execute({
+      params: {
+        id: task.id,
+      },
+      body: {
+        user_id: task.user_id,
+      },
+    });
 
     expect(result.statusCode).toBe(200);
   });
@@ -43,6 +44,9 @@ describe('DeleteTaskController', () => {
     const result = await sut.execute({
       params: {
         id: '',
+      },
+      body: {
+        user_id: task.user_id,
       },
     });
 
