@@ -4,10 +4,11 @@ import { prisma } from '../../../../prisma/prisma.js';
 import { TaskNotFoundError } from '../../../errors/index.js';
 
 export class DeleteTaskRepository {
-  async execute(taskId) {
+  async execute(taskId, userId) {
     try {
       const task = await prisma.task.delete({
         where: {
+          user_id: userId,
           id: taskId,
         },
       });
