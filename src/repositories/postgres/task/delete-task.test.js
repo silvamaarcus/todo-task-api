@@ -1,31 +1,47 @@
+import { faker } from '@faker-js/faker';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 import { prisma } from '../../../../prisma/prisma.js';
-import { TaskNotFoundError } from '../../../errors';
-import { task } from '../../../tests/fixtures/tasks';
-import { DeleteTaskRepository } from './delete-task';
+import { TaskNotFoundError } from '../../../errors/index.js';
+import { task } from '../../../tests/fixtures/tasks.js';
+import { user } from '../../../tests/fixtures/users.js';
+import { CreateUserRepository } from '../user/create-user.js';
+import { CreateTaskRepository } from './create-task.js';
+import { DeleteTaskRepository } from './delete-task.js';
 
 describe('DeleteTaskRepository', () => {
   test('Deve deletar uma Task no banco', async () => {
+    // Cria um usuário com o mesmo ID que a task espera
+    const createUserRepository = new CreateUserRepository();
+    const userId = faker.string.uuid();
+    await createUserRepository.execute({
+      ...user,
+      id: userId, // Garante que o user_id seja o mesmo da task
+    });
+    // Cria uma Task no banco de dados
+    const createTask = new CreateTaskRepository();
+    await createTask.execute({ ...task, user_id: userId });
     const sut = new DeleteTaskRepository();
-    await prisma.task.create({ data: task });
 
-    const deleteTask = await sut.execute(task.id);
+    const deleteTask = await sut.execute(task.id, userId);
 
     expect(deleteTask.id).toBeDefined();
     expect(deleteTask.title).toBe('Teste');
   });
 
-  test('Deve garantir que o Prisma recebeu o ID', async () => {
+  test('Deve garantir que o Prisma recebeu parametros corretos', async () => {
     const sut = new DeleteTaskRepository();
-    await prisma.task.create({ data: task });
-    const prismaSpy = import.meta.jest.spyOn(prisma.task, 'delete');
-    const taskId = task.id;
+    import.meta.jest
+      .spyOn(prisma.task, 'delete')
+      .mockResolvedValueOnce(task.id, task.user_id); // Simula a exclusão da Task
 
-    await sut.execute(taskId);
+    await sut.execute(task.id, task.user_id);
 
-    expect(prismaSpy).toHaveBeenCalledWith({
-      where: { id: taskId },
+    expect(prisma.task.delete).toHaveBeenCalledWith({
+      where: {
+        user_id: task.user_id,
+        id: task.id,
+      },
     });
   });
 
