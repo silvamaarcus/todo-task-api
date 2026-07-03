@@ -19,8 +19,15 @@ export class UpdateTaskController {
 
       const taskId = httpRequest.params.id;
 
+      const userId = httpRequest.body.user_id;
+
+      if (!userId) {
+        return badRequest({ message: 'O user_id é obrigátório.' });
+      }
+
       const updateTask = await this.updateTaskUseCase.execute(
         taskId,
+        userId,
         parsedParams.data,
       );
 
