@@ -18,7 +18,7 @@ export class DeleteTaskUseCase {
       throw new TaskNotFoundError(taskId); // não revelamos que a task existe
     }
 
-    const deleteTask = await this.deleteTaskRepository.execute(taskId);
+    const deleteTask = await this.deleteTaskRepository.execute(taskId, userId);
 
     return deleteTask;
   }
