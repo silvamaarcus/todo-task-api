@@ -1,0 +1,64 @@
+name: Deployment Workflow # Nome do workflow
+
+# Workflow será acionado em push ou pull request para a branch main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# Define os jobs do workflow (conjunto de etapas que serão executadas)
+jobs:
+  check:
+    runs-on: ubuntu-latest # Define o sistema operacional que será usado para executar o job
+
+    # Define os serviços que serão usados durante a execução do job (banco de dados PostgreSQL)
+    services:
+      postgres: 
+        image: postgres:latest 
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: todo-task-test
+        ports:
+          - 5433:5432
+        # Define as opções de saúde do serviço (verifica se o banco de dados está pronto para uso)
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    # Define as etapas do job (ações que serão executadas)
+    steps:
+      - name: Checkout code # Nome da etapa
+        uses: actions/checkout@v4 # Checkout do código-fonte do repositório
+
+      - name: Use Node.js # Nome da etapa
+        uses: actions/setup-node@v4 # Configurar o ambiente Node.js
+        with:
+          node-version: '22' # Usa a versão 22 do Node.js
+
+      - name: Create .env.test file # Nome da etapa
+        # Criar o arquivo .env.test com as variáveis de ambiente necessárias para os testes
+        run: |
+          echo "DATABASE_URL=postgresql://postgres:password@localhost:5433/todo-task-test" >> .env.test
+          echo "JWT_ACCESS_TOKEN_SECRET=secret" >> .env.test
+          echo "JWT_REFRESH_TOKEN_SECRET=secret2" >> .env.test
+
+      - name: Install dependencies # Nome da etapa
+        run: npm ci # Instala as dependências do projeto usando npm ci (instalação limpa)
+
+      - name: Run migrations # Nome da etapa
+        run: npx dotenv -e .env.test -- npx prisma migrate deploy # Executa as migrações do banco de dados usando o Prisma
+
+      - name: ESLint # Nome da etapa
+        run: npm run lint:fix # Executa o ESLint para verificar e corrigir problemas de linting no código
+
+      - name: Prettier # Nome da etapa
+        run: npm run format # Executa o Prettier para formatar o código
+
+      - name: Test # Nome da etapa
+        run: npm test # Executa os testes do projeto
