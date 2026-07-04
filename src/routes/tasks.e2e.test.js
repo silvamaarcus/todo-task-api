@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { app } from '../app.js';
+import app from '../app.js';
 
 // Helper: cria usuário, faz login e retorna token de acesso
 const createUserAndLogin = async () => {

@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import { app } from './src/app.js'; // Importa a instância do aplicativo Express
+import app from './src/app.js'; // Importa a instância do aplicativo Express
 
 // Inicia o servidor na porta 8080
 app.listen(process.env.PORT, () => {

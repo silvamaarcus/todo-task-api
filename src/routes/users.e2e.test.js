@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { app } from '../app.js';
+import app from '../app.js';
 
 describe('Rotas E2E para Tasks', () => {
   test('POST /api/users deve criar um usuário', async () => {
