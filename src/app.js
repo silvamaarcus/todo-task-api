@@ -9,4 +9,4 @@ app.use(express.json());
 app.use('/api/users', usersRouter);
 app.use('/api/tasks/me', tasksRouter);
 
-export { app };
+export default app;
