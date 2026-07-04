@@ -7,6 +7,7 @@
   "scripts": {
     "test": "dotenv -e .env.test -- node --experimental-vm-modules node_modules/.bin/jest --runInBand",
     "test:cov": "dotenv -e .env.test -- node --experimental-vm-modules node_modules/.bin/jest --runInBand --coverage",
+    "build": "prisma generate",
     "start": "node index.js",
     "dev": "node index.js",
     "lint:fix": "eslint --fix --max-warnings 0 .",
