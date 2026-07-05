@@ -16,8 +16,8 @@ jobs:
 
     # Define os serviços que serão usados durante a execução do job (banco de dados PostgreSQL)
     services:
-      postgres: 
-        image: postgres:latest 
+      postgres:
+        image: postgres:latest
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
@@ -62,3 +62,20 @@ jobs:
 
       - name: Test # Nome da etapa
         run: npm test # Executa os testes do projeto
+
+  # Define o job de deploy (implantação) que será executado após a conclusão do job de verificação
+  deploy:
+    runs-on: ubuntu-latest # Define o sistema operacional
+    needs: check # Deploy só roda se os testes passarem
+    # Deploy só na main, não em PRs
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Vercel
+        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
