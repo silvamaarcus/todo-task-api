@@ -1,7 +1,5 @@
 # todo-task-api
 
-![CI/CD](https://github.com/silvamaarcus/todo-task-api/actions/workflows/ci.yml/badge.svg)
-
 > API REST de gerenciamento de tarefas construída com Node.js, Express e PostgreSQL.
 
 ---
