@@ -1,5 +1,6 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 
+import { tasksDocs } from '../docs/tasks.docs.js';
 import { usersDocs } from '../docs/users.docs.js';
 
 const options = {
@@ -21,6 +22,7 @@ const options = {
     },
     paths: {
       ...usersDocs,
+      ...tasksDocs,
     },
   },
   apis: [],
