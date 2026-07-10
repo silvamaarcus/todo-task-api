@@ -1,5 +1,5 @@
 export const tasksDocs = {
-  '/api/tasks': {
+  '/api/tasks/me': {
     post: {
       tags: ['Tarefas'],
       summary: 'Criar nova tarefa',
@@ -57,7 +57,7 @@ export const tasksDocs = {
       },
     },
   },
-  '/api/tasks/{id}': {
+  '/api/tasks/me/{id}': {
     get: {
       tags: ['Tarefas'],
       summary: 'Obter tarefa por ID',
