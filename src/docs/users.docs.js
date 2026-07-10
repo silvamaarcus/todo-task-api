@@ -77,6 +77,7 @@ export const usersDocs = {
     patch: {
       tags: ['Usuários'],
       summary: 'Atualizar usuário por ID',
+      security: [{ bearerAuth: [] }],
       parameters: [
         {
           name: 'id',
@@ -112,6 +113,7 @@ export const usersDocs = {
     delete: {
       tags: ['Usuários'],
       summary: 'Deletar usuário por ID',
+      security: [{ bearerAuth: [] }],
       parameters: [
         {
           name: 'id',
